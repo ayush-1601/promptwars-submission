@@ -5,11 +5,46 @@ const GEN_AI_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY || "";
 const genAI = new GoogleGenerativeAI(GEN_AI_KEY);
 
 const PERSONALITIES: Record<PlayerColor, string> = {
-    RED: "Aggressive, boastful, competitive, loves trash-talking.",
-    BLUE: "Strategic, calm, analytical, focused on the long game.",
-    GREEN: "Impulsive, mischievous, unpredictable, loves chaos.",
-    YELLOW: "Friendly, supportive, optimistic, always cheering.",
+    CRIMSON: "Aggressive, boastful, competitive, loves trash-talking.",
+    SAPPHIRE: "Strategic, calm, analytical, focused on the long game.",
+    EMERALD: "Impulsive, mischievous, unpredictable, loves chaos.",
+    GOLD: "Friendly, supportive, optimistic, always cheering.",
 };
+
+export async function generateAvatarDescription(
+    imageData: string, // base64
+    mimeType: string,
+    teamColor: PlayerColor,
+    themePrompt: string
+): Promise<string> {
+    const prompt = `Analyze this image and the theme prompt: "${themePrompt}". 
+    Generate a detailed 3D character description for a "Royal Ancient Battleground" Ludo game. 
+    The character belongs to Team ${teamColor}.
+    Describe the character's appearance, armor, magical artifacts, and "royal ancient" vibe.
+    Keep it within 30 words. Result should be just the description.`;
+
+    if (!GEN_AI_KEY) {
+        return `A majestic ${teamColor} warrior inspired by the uploaded image, wielding ancient artifacts in a royal battleground.`;
+    }
+
+    try {
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const result = await model.generateContent([
+            prompt,
+            {
+                inlineData: {
+                    data: imageData,
+                    mimeType
+                }
+            }
+        ]);
+        const response = await result.response;
+        return response.text().trim();
+    } catch (error) {
+        console.error("Gemini Avatar Generation Error:", error);
+        return `The Royal ${teamColor} Sentinel, forged from the essence of your vision.`;
+    }
+}
 
 export async function generateDialogue(
     color: PlayerColor,

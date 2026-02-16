@@ -15,10 +15,10 @@ interface PawnProps {
 }
 
 const COLOR_TIER: Record<PlayerColor, string> = {
-    RED: 'bg-red-600 shadow-[0_0_15px_rgba(220,38,38,0.4)]',
-    BLUE: 'bg-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.4)]',
-    YELLOW: 'bg-yellow-500 shadow-[0_0_15px_rgba(234,179,8,0.4)]',
-    GREEN: 'bg-green-600 shadow-[0_0_15px_rgba(22,163,74,0.4)]',
+    CRIMSON: 'bg-red-600 shadow-[0_0_15px_rgba(220,38,38,0.4)]',
+    SAPPHIRE: 'bg-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.4)]',
+    GOLD: 'bg-yellow-500 shadow-[0_0_15px_rgba(234,179,8,0.4)]',
+    EMERALD: 'bg-green-600 shadow-[0_0_15px_rgba(22,163,74,0.4)]',
 };
 
 export const Pawn: React.FC<PawnProps> = ({ color, isSelectable, onClick, className }) => {

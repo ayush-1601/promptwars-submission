@@ -2,9 +2,8 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Dice1, Dice2, Dice3, Dice4, Dice5, Dice6 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { PlayerColor } from '@/lib/game-logic';
+import { PlayerColor, PLAYER_COLORS_3D } from '@/lib/game-logic';
 
 interface DiceProps {
     value: number | null;
@@ -14,64 +13,64 @@ interface DiceProps {
     disabled: boolean;
 }
 
-const DICE_ICONS = [Dice1, Dice2, Dice3, Dice4, Dice5, Dice6];
-
 export const Dice: React.FC<DiceProps> = ({ value, isRolling, onRoll, currentPlayer, disabled }) => {
-    const Icon = value ? DICE_ICONS[value - 1] : Dice1;
-
-    const colorClasses: Record<PlayerColor, string> = {
-        RED: 'text-red-500 border-red-500',
-        BLUE: 'text-blue-500 border-blue-500',
-        YELLOW: 'text-yellow-500 border-yellow-500',
-        GREEN: 'text-green-500 border-green-500',
-    };
+    const color = PLAYER_COLORS_3D[currentPlayer];
 
     return (
-        <div className="flex flex-col items-center gap-4">
-            <div className={cn("text-xs font-bold uppercase tracking-widest", colorClasses[currentPlayer].split(' ')[0])}>
-                {currentPlayer}'s Turn
-            </div>
-
+        <div className="flex flex-col items-center gap-6">
             <motion.button
-                whileHover={!disabled ? { scale: 1.1 } : {}}
-                whileTap={!disabled ? { scale: 0.9 } : {}}
+                whileHover={!disabled ? { scale: 1.05 } : {}}
+                whileTap={!disabled ? { scale: 0.95 } : {}}
                 onClick={onRoll}
                 disabled={disabled}
                 className={cn(
-                    "w-20 h-20 bg-white rounded-2xl shadow-xl flex items-center justify-center border-4 transition-all duration-300",
-                    colorClasses[currentPlayer],
-                    disabled && "opacity-50 cursor-not-allowed",
-                    isRolling && "animate-bounce"
+                    "w-24 h-24 rounded-full flex items-center justify-center text-4xl font-black shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all border-4 relative overflow-hidden group",
+                    {
+                        "bg-slate-100 border-slate-200 text-slate-300 cursor-not-allowed": isRolling,
+                        "bg-white border-slate-200 text-slate-400": !isRolling && value === null,
+                        "bg-white border-slate-200 text-slate-900": !isRolling && value !== null,
+                    }
                 )}
+                style={{
+                    boxShadow: !isRolling && value !== null ? `0 0 30px ${color}22, inset 0 0 10px rgba(0,0,0,0.05)` : 'inset 0 0 10px rgba(0,0,0,0.05)',
+                    borderColor: !isRolling && value !== null ? color : undefined
+                }}
             >
+                {/* Surface Shine */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent pointer-events-none" />
+
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={isRolling ? 'rolling' : (value || 'idle')}
-                        initial={{ opacity: 0, rotate: -180 }}
+                        initial={{ opacity: 0, rotate: -360 }}
                         animate={{ opacity: 1, rotate: 0 }}
-                        exit={{ opacity: 0, rotate: 180 }}
+                        exit={{ opacity: 0, rotate: 360 }}
+                        className="relative z-10"
                     >
                         {isRolling ? (
-                            <div className="grid grid-cols-2 gap-1 scale-75">
-                                <div className="w-3 h-3 bg-current rounded-full animate-pulse" />
-                                <div className="w-3 h-3 bg-current rounded-full animate-pulse delay-75" />
-                                <div className="w-3 h-3 bg-current rounded-full animate-pulse delay-150" />
-                                <div className="w-3 h-3 bg-current rounded-full animate-pulse delay-300" />
-                            </div>
+                            <motion.div
+                                animate={{ rotate: 360 }}
+                                transition={{ repeat: Infinity, duration: 0.5, ease: "linear" }}
+                                className="text-5xl"
+                            >
+                                🌑
+                            </motion.div>
                         ) : (
-                            <Icon size={48} strokeWidth={2.5} />
+                            <div className="drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
+                                {value || '?'}
+                            </div>
                         )}
                     </motion.div>
                 </AnimatePresence>
             </motion.button>
 
-            {value && !isRolling && !disabled && (
+            {!isRolling && value === null && (
                 <motion.div
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    className="text-sm font-medium text-slate-500"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-300 animate-pulse"
                 >
-                    Rolled a {value}!
+                    Tap to Fire
                 </motion.div>
             )}
         </div>

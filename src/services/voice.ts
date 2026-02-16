@@ -3,10 +3,10 @@
 import { PlayerColor } from '@/lib/game-logic';
 
 const VOICE_SETTINGS: Record<PlayerColor, { rate: number; pitch: number; volume: number }> = {
-    RED: { rate: 1.2, pitch: 0.8, volume: 1.0 },    // Aggressive, deep
-    BLUE: { rate: 0.9, pitch: 1.0, volume: 0.8 },   // Strategic, calm
-    GREEN: { rate: 1.5, pitch: 1.2, volume: 1.0 },  // Impulsive, high-pitched
-    YELLOW: { rate: 1.1, pitch: 1.4, volume: 0.9 }, // Friendly, cheerful
+    CRIMSON: { rate: 1.2, pitch: 0.8, volume: 1.0 },    // Aggressive, deep
+    SAPPHIRE: { rate: 0.9, pitch: 1.0, volume: 0.8 },   // Strategic, calm
+    EMERALD: { rate: 1.5, pitch: 1.2, volume: 1.0 },    // Impulsive, high-pitched
+    GOLD: { rate: 1.1, pitch: 1.4, volume: 0.9 },      // Friendly, cheerful
 };
 
 class VoiceService {

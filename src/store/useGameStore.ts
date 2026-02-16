@@ -39,17 +39,17 @@ const initialPawns: Pawn[] = PLAYER_COLORS.flatMap((color) =>
 
 export const useGameStore = create<GameState>((set, get) => ({
     pawns: initialPawns,
-    currentPlayer: 'RED',
+    currentPlayer: 'CRIMSON',
     diceRoll: null,
     isRolling: false,
-    gameLog: ['Welcome to Ludo Echoes! Team Red starts.'],
+    gameLog: ['Welcome to Ludo Echoes! Team Crimson starts.'],
     winner: null,
     isSetupOpen: true,
     themes: {
-        RED: '',
-        BLUE: '',
-        YELLOW: '',
-        GREEN: '',
+        CRIMSON: '',
+        SAPPHIRE: '',
+        GOLD: '',
+        EMERALD: '',
     },
 
     completeSetup: (themes) => set({ themes, isSetupOpen: false }),
@@ -136,7 +136,7 @@ export const useGameStore = create<GameState>((set, get) => ({
 
     resetGame: () => set({
         pawns: initialPawns,
-        currentPlayer: 'RED',
+        currentPlayer: 'CRIMSON',
         diceRoll: null,
         gameLog: ['Game Reset.'],
         winner: null,
@@ -149,7 +149,7 @@ function getNextPlayer(current: PlayerColor): PlayerColor {
     return PLAYER_COLORS[(index + 1) % 4];
 }
 
-function canMovePawnLogic(pawn: Pawn, roll: number): boolean {
+export function canMovePawnLogic(pawn: Pawn, roll: number): boolean {
     if (pawn.position === -1) return roll === 6;
     if (pawn.position === 200) return false;
 

@@ -1,0 +1,16 @@
+node_modules
+.next
+out
+.git
+.gitignore
+.dockerignore
+Dockerfile
+README.md
+.gemini
+brain
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+volumes

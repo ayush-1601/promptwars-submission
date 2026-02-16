@@ -1,4 +1,4 @@
-export type PlayerColor = 'RED' | 'BLUE' | 'GREEN' | 'YELLOW';
+export type PlayerColor = 'CRIMSON' | 'SAPPHIRE' | 'EMERALD' | 'GOLD';
 
 export interface Pawn {
     id: string;
@@ -7,20 +7,27 @@ export interface Pawn {
     index: number; // 0-3
 }
 
-export const PLAYER_COLORS: PlayerColor[] = ['RED', 'BLUE', 'YELLOW', 'GREEN'];
+export const PLAYER_COLORS: PlayerColor[] = ['CRIMSON', 'SAPPHIRE', 'GOLD', 'EMERALD'];
+
+export const PLAYER_COLORS_3D: Record<PlayerColor, string> = {
+    CRIMSON: '#ef4444',
+    SAPPHIRE: '#3b82f6',
+    GOLD: '#eab308',
+    EMERALD: '#22c55e',
+};
 
 export const START_POSITIONS: Record<PlayerColor, number> = {
-    RED: 0,
-    BLUE: 13,
-    YELLOW: 26,
-    GREEN: 39,
+    CRIMSON: 0,
+    SAPPHIRE: 13,
+    GOLD: 26,
+    EMERALD: 39,
 };
 
 export const HOME_STRETCH_START: Record<PlayerColor, number> = {
-    RED: 50,
-    BLUE: 11,
-    YELLOW: 24,
-    GREEN: 37,
+    CRIMSON: 50,
+    SAPPHIRE: 11,
+    GOLD: 24,
+    EMERALD: 37,
 };
 
 export function getSafePositions(): number[] {
