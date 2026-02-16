@@ -1,0 +1,20 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: promptwars
+  labels:
+    cloud.googleapis.com/location: us-central1
+spec:
+  template:
+    spec:
+      containers:
+      - image: gcr.io/[PROJECT_ID]/promptwars
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: "1"
+            memory: 512Mi
+        env:
+        - name: NEXT_PUBLIC_GEMINI_API_KEY
+          value: "[YOUR_GEMINI_API_KEY]"

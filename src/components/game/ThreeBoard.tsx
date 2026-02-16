@@ -87,10 +87,10 @@ const Sentinel = ({ color }: { color: string }) => (
         </mesh>
         <mesh castShadow position={[0, 1.1, 0]}>
             <octahedronGeometry args={[0.2]} />
-            <meshStandardMaterial color="#334155" emmissive={color} emmissiveIntensity={0.5} />
+            <meshStandardMaterial color="#334155" emissive={color} emissiveIntensity={0.5} />
         </mesh>
-        <mesh castShadow position={[0, 0.2, 0]}>
-            <torusGeometry args={[0.3, 0.05, 16, 32]} rotation={[Math.PI / 2, 0, 0]} />
+        <mesh castShadow position={[0, 0.2, 0]} rotation={[Math.PI / 2, 0, 0]}>
+            <torusGeometry args={[0.3, 0.05, 16, 32]} />
             <meshStandardMaterial color={color} />
         </mesh>
     </group>
